@@ -3,6 +3,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest  # Usa la imagen oficial
     container_name: phpmyadmin  # Nombre del contenedor
+    restart: always 
     ports:
       - "9090:80"  # Accederemos en http://localhost:9090
     environment:
@@ -15,7 +16,8 @@ services:
     ports:
       - "3306:3306"  # Puerto estándar de MySQL
     volumes:
-      - dbfiles:/var/lib/mysql  # Guarda los datos aquí (importante!)
+      - ./dbfiles:/docker-entrypoint-initdb.d 
+      - ./mysql_data:/var/lib/mysql  # Guarda los datos aquí (importante!)
     environment:
       - MYSQL_ROOT_PASSWORD=qwerty  # Contraseña del administrador
       - MYSQL_DATABASE=sistema_ventas_db  # Nombre de la base de datos
@@ -43,5 +45,3 @@ services:
       - "80:80"  # Accederemos en http://localhost
     depends_on:
       - sistema-ventas-back
-volumes:
-  dbfiles: {} #S Declaración Española (resuelve el error)

@@ -1,4 +1,4 @@
-# Usar versión de nginx estable y ligera
+#Usar versión de nginx estable y ligera
 FROM nginx:stable-alpine
 
 # Crear un volumen en /temp
@@ -19,5 +19,4 @@ EXPOSE 80
 
 # Comando para mantener Nginx ejecutándose en primer plano
 CMD ["nginx", "-g", "daemon off;"]
-
 
