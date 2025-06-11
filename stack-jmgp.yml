@@ -43,4 +43,5 @@ services:
       - "80:80"  # Accederemos en http://localhost
     depends_on:
       - sistema-ventas-back
-  
+  volúmenes:
+  dbfiles:  Declaración Española (resuelve el error)
