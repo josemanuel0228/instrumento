@@ -15,7 +15,7 @@ services:
     ports:
       - "3306:3306"  # Puerto estándar de MySQL
     volumes:
-      - dbfiles:/var/lib/mysql  # Guarda los datos aquí (importante!)
+      - dbfiles:  # Guarda los datos aquí (importante!)
     environment:
       - MYSQL_ROOT_PASSWORD=qwerty  # Contraseña del administrador
       - MYSQL_DATABASE=sistema_ventas_db  # Nombre de la base de datos
@@ -43,5 +43,3 @@ services:
       - "80:80"  # Accederemos en http://localhost
     depends_on:
       - sistema-ventas-back
-  volúmenes:
-  dbfiles:  Declaración Española (resuelve el error)
