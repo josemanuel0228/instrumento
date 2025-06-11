@@ -44,4 +44,4 @@ services:
     depends_on:
       - sistema-ventas-back
 volumes:
-  dbfiles:  Declaración Española (resuelve el error)
+  dbfiles: {} #S Declaración Española (resuelve el error)
