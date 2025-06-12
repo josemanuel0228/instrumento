@@ -1,56 +1,45 @@
 services:
-  # Servicio de PHPMyAdmin (para administrar la base de datos)
   phpmyadmin:
-    container_name: phpmyadmin  # Nombre del contenedor
-    image: phpmyadmin:latest  # Usa la imagen oficial
-    restart: always 
-    ports:
-      - 9090:80  # Accederemos en http://localhost:9090
-    environment:
-      - PMA_ARBITRARY=1  # Permite conectarse a cualquier servidor MySQL
-
-  # Servicio de MySQL (base de datos)
-  mysql-db:
-
-    container_name: mysql-db 
-    image: mysql:8.0  # Versión 8.0 de MySQL
-    command: --default-authentication-plugin=mysql_native_password
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
     restart: always
     ports:
-      - 3306:3306  # Puerto estándar de MySQL
-    volumes:
-      - ./dbfiles:/docker-entrypoint-initdb.d 
-      - ./mysql_data:/var/lib/mysql  # Guarda los datos aquí (importante!)
+      - 9090:80
     environment:
-      - MYSQL_ROOT_PASSWORD=qwerty  # Contraseña del administrador
-      - MYSQL_DATABASE=sistema_ventas_db  # Nombre de la base de datos
-      - MYSQL_USER=admin  # Usuario normal
-      - MYSQL_PASSWORD=admin  # Contraseña del usuario normal
+      - PMA_ARBITRARY=1
 
-  # Servicio del Backend (Node.js)
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - 3306:3306
+    volumes:
+      - ./dbfiles:/docker-entrypoint-initdb.d
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=qwerty
+      - MYSQL_DATABASE=sistema_ventas_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+
   sistema-ventas-back:
     build:
-      context: ./sistema-ventas-back  # Carpeta donde está el Dockerfile del backend
+      context: ./sistema-ventas-back
     container_name: sistema-ventas-back
     ports:
-      - 8080:3000  # Accederemos en http://localhost:8080
-    environment: 
-      DB_HOST: mysql-db
-      DB_USER: admin
-      DB_PASSWORD: admin
-      DB_NAME: sistema_ventas_db
+      - 8080:3000
     depends_on:
-      - mysql-db  # Espera a que MySQL esté listo
-    restart: unless-stopped
+      - mysql-db
 
-  # Servicio del Frontend (Nginx)
   sistema-ventas-front:
     build:
-      context: ./angular  # Carpeta donde está el Dockerfile del frontend
+      context: ./angular
     container_name: sistema-ventas-front
     ports:
-      - "80:80"  # Accederemos en http://localhost
+      - 80:80
     depends_on:
       - sistema-ventas-back
     volumes:
-      - /temp 
+      - /temp

@@ -1,20 +1,20 @@
-# Usar la imagen base de Node.js
+# Usar la imagen de node:18.17.1-alpine
 FROM node:18.17.1-alpine
 
-# Crear directorio de trabajo
+# Crear un volumen en /usr/src/app
 WORKDIR /usr/src/app
 
-# Copiar archivos de dependencias
+# Copiar los archivos package
 COPY package*.json .
 
-# Instalar dependencias
+# Ejecutar npm install
 RUN npm install
 
-# Copiar todo el proyecto al contenedor
+# Copiar todo el contenido al contenedor
 COPY . .
 
 # Exponer el puerto 3000
 EXPOSE 3000
 
-# Comando para ejecutar la app
+# Ejecutar en el CMD el comando node index.js
 CMD ["node", "index.js"]
