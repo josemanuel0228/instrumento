@@ -47,4 +47,4 @@ services:
     depends_on:
       - sistema-ventas-back
     volumes:
-      -/temp 
+      - /temp 
