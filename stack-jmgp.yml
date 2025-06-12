@@ -29,7 +29,6 @@ services:
   sistema-ventas-back:
     build:
       context: ./sistema-ventas-back  # Carpeta donde está el Dockerfile del backend
-      dockerfile: Dockerfile
     container_name: sistema-ventas-back
     ports:
       - "8080:3000"  # Accederemos en http://localhost:8080
@@ -40,7 +39,6 @@ services:
   sistema-ventas-front:
     build:
       context: ./angular  # Carpeta donde está el Dockerfile del frontend
-      dockerfile: Dockerfile
     container_name: sistema-ventas-front
     ports:
       - "80:80"  # Accederemos en http://localhost
