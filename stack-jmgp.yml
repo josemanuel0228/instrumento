@@ -34,8 +34,14 @@ services:
     container_name: sistema-ventas-back
     ports:
       - 8080:3000  # Accederemos en http://localhost:8080
+    environment: 
+      DB_HOST: mysql-db
+      DB_USER: admin
+      DB_PASSWORD: admin
+      DB_NAME: sistema_ventas_db
     depends_on:
       - mysql-db  # Espera a que MySQL esté listo
+    restart: unless-stopped
 
   # Servicio del Frontend (Nginx)
   sistema-ventas-front:
