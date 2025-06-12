@@ -5,13 +5,13 @@ FROM node:18.17.1-alpine
 WORKDIR /usr/src/app
 
 # Copiar archivos de dependencias
-COPY package.json package-lock.json ./
+COPY package*.json .
 
 # Instalar dependencias
 RUN npm install
 
 # Copiar todo el proyecto al contenedor
-COPY . /usr/src/app
+COPY . .
 
 # Exponer el puerto 3000
 EXPOSE 3000

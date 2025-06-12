@@ -1,21 +1,23 @@
 services:
   # Servicio de PHPMyAdmin (para administrar la base de datos)
   phpmyadmin:
-    image: phpmyadmin:latest  # Usa la imagen oficial
     container_name: phpmyadmin  # Nombre del contenedor
+    image: phpmyadmin:latest  # Usa la imagen oficial
     restart: always 
     ports:
-      - "9090:80"  # Accederemos en http://localhost:9090
+      - 9090:80  # Accederemos en http://localhost:9090
     environment:
       - PMA_ARBITRARY=1  # Permite conectarse a cualquier servidor MySQL
 
   # Servicio de MySQL (base de datos)
   mysql-db:
+
+    container_name: mysql-db 
     image: mysql:8.0  # Versión 8.0 de MySQL
     command: --default-authentication-plugin=mysql_native_password
-    container_name: mysql-db  
+    restart: always
     ports:
-      - "3306:3306"  # Puerto estándar de MySQL
+      - 3306:3306  # Puerto estándar de MySQL
     volumes:
       - ./dbfiles:/docker-entrypoint-initdb.d 
       - ./mysql_data:/var/lib/mysql  # Guarda los datos aquí (importante!)
@@ -31,7 +33,7 @@ services:
       context: ./sistema-ventas-back  # Carpeta donde está el Dockerfile del backend
     container_name: sistema-ventas-back
     ports:
-      - "8080:3000"  # Accederemos en http://localhost:8080
+      - 8080:3000  # Accederemos en http://localhost:8080
     depends_on:
       - mysql-db  # Espera a que MySQL esté listo
 
@@ -44,3 +46,5 @@ services:
       - "80:80"  # Accederemos en http://localhost
     depends_on:
       - sistema-ventas-back
+    volumes:
+      -/temp 
